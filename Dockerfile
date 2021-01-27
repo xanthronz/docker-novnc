@@ -32,7 +32,7 @@ RUN set -ex; \
         sudo \
         tzdata \
         nano \
-        iptables \
+        
         mc \
         ca-certificates \
         xterm \
