@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND noninteractive
 ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
 
@@ -69,8 +69,7 @@ RUN set -ex; \
         libpulse-dev m4 intltool dpkg-dev \
         libopus-dev \
         libmp3lame-dev && \ 
-    cp /etc/apt/sources.list /etc/apt/sources.list~ && \
-    sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list && \
+    
     apt-get update && apt build-dep pulseaudio -y && \
     cd /tmp && \
     pulsever=$(pulseaudio --version | awk '{print $2}') && cd /tmp/pulseaudio-$pulsever && ./configure  && \
