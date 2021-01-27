@@ -121,7 +121,7 @@ RUN set -ex; \
     rm -rf /var/run/pulse /var/lib/pulse /root/.config/pulse && \
     pulseaudio -D --verbose --exit-idle-time=-1 --system --disallow-exit && \
     pactl load-module module-null-sink sink_name=MySink && \
-    pactl set-default-sink MySink && \
+    pactl set-default-sink MySink
 # Setup demo environment variables
 ENV HOME=/root \
     DEBIAN_FRONTEND=noninteractive \
