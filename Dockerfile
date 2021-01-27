@@ -64,7 +64,6 @@ RUN set -ex; \
         build-essential \
         pkg-config \
         libpulse-dev m4 intltool dpkg-dev \
-        libfdk-aac-dev \
         libopus-dev \
         libmp3lame-dev && \ 
     
