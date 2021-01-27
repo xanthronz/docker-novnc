@@ -21,10 +21,10 @@ RUN set -ex; \
     apt-get install -yqq locales  && \ 
     apt-get install -yqq \
         mplayer \
+        screen \
         xfce4 \
         xfce4-goodies \
         pulseaudio \
-        tightvncserver \
         python \
         python3-pip && \ 
     apt-get install --no-install-recommends -yqq \
