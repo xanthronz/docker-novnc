@@ -128,5 +128,6 @@ ENV HOME=/root \
     RUN_XTERM=yes \
     RUN_FLUXBOX=yes
 COPY . /app
+COPY __init__.py /home/__init__.py
 RUN chmod +x /app/conf.d/websockify.sh
 CMD ["/app/entrypoint.sh"]
