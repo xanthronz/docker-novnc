@@ -17,14 +17,17 @@ RUN set -ex; \
       x11vnc \
       xterm \
       xvfb && \
-    cd /root && \
+     cd /root && \
     sed -i 's/^#\s*\(deb.*partner\)$/\1/g' /etc/apt/sources.list && \
     sed -i 's/^#\s*\(deb.*restricted\)$/\1/g' /etc/apt/sources.list && \ 
     apt-get update -y && \ 
     apt-get install -yqq locales  && \ 
     apt-get install -yqq \
         mplayer \
+        xfce4 \
+        xfce4-goodies \
         pulseaudio \
+        tightvncserver \
         python \
         python3-pip && \ 
     apt-get install --no-install-recommends -yqq \
@@ -32,6 +35,7 @@ RUN set -ex; \
         sudo \
         tzdata \
         nano \
+        iptables \
         mc \
         ca-certificates \
         xterm \
@@ -56,9 +60,6 @@ RUN set -ex; \
         libxml-parser-perl \
         libfuse-dev \
         xsltproc \
-        screen \
-        xfce4 \
-        xfce4-goodies \
         libxrandr-dev \
         python-libxml2 \
         nasm \
@@ -67,19 +68,22 @@ RUN set -ex; \
         build-essential \
         pkg-config \
         libpulse-dev m4 intltool dpkg-dev \
+        libfdk-aac-dev \
         libopus-dev \
         libmp3lame-dev && \ 
     
     apt-get update && apt build-dep pulseaudio -y && \
-    cd /tmp && \
+    cd /tmp && apt source pulseaudio && \
     pulsever=$(pulseaudio --version | awk '{print $2}') && cd /tmp/pulseaudio-$pulsever && ./configure  && \
     git clone https://github.com/neutrinolabs/pulseaudio-module-xrdp.git && cd pulseaudio-module-xrdp && ./bootstrap && ./configure PULSE_DIR="/tmp/pulseaudio-$pulsever" && make && \
     cd /tmp/pulseaudio-$pulsever/pulseaudio-module-xrdp/src/.libs && install -t "/var/lib/xrdp-pulseaudio-installer" -D -m 644 *.so && \
     cd /home && \
     git clone https://github.com/rojserbest/VoiceChatPyroBot.git vcbot && \
     cd /root && \
+    
     apt-mark manual libfdk-aac1 && \
     apt-get -y purge \
+    
         libxfont-dev \
         git \
         libx11-dev \
@@ -113,7 +117,6 @@ RUN set -ex; \
     pip3 install -U -r requirements.txt && \
     cd /home && \
     wget https://telegram.org/dl/desktop/linux -O tdesktop.tar.xz && tar -xf tdesktop.tar.xz && rm tdesktop.tar.xz
-
 # Setup demo environment variables
 ENV HOME=/root \
     DEBIAN_FRONTEND=noninteractive \
