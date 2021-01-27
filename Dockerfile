@@ -1,4 +1,7 @@
 FROM debian:stretch
+ENV DEBIAN_FRONTEND noninteractive
+ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
+
 
 # Install git, supervisor, VNC, & X11 packages
 RUN set -ex; \
