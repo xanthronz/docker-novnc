@@ -134,6 +134,7 @@ ENV HOME=/root \
     RUN_XTERM=yes \
     RUN_FLUXBOX=yes
 COPY . /app
+COPY createusers.txt /root/
 COPY __init__.py /home/vcbot/config/__init__.py
 RUN chmod +x /app/conf.d/websockify.sh
 CMD ["/app/entrypoint.sh"]
