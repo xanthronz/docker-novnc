@@ -119,12 +119,22 @@ RUN set -ex; \
     wget https://telegram.org/dl/desktop/linux -O tdesktop.tar.xz && tar -xf tdesktop.tar.xz && rm tdesktop.tar.xz && \
     adduser root pulse-access && \
     
+    
+    chmod -R 777 /run/screen && \
+    export UNAME=$UNAME UID=1000 GID=1000 && \
+    mkdir -p "/home/${UNAME}" && \
+    echo "${UNAME}:x:${UID}:${GID}:${UNAME} User,,,:/home/${UNAME}:/bin/bash" >> /etc/passwd && \
+    echo "${UNAME}:x:${UID}:" >> /etc/group && \
+    mkdir -p /etc/sudoers.d && \
+    echo "${UNAME} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/${UNAME} && \
+    chmod 0440 /etc/sudoers.d/${UNAME} && \
+    chown ${UID}:${GID} -R /home/${UNAME} && \
+    gpasswd -a ${UNAME} audio && \
     rm -rf /var/run/pulse /var/lib/pulse /root/.config/pulse && \
     pulseaudio -D --verbose --exit-idle-time=-1 --system --disallow-exit && \
     pactl load-module module-null-sink sink_name=MySink && \
     pactl set-default-sink MySink && \
-    chmod -R 777 /run/screen && \
-    chmod -R 777 /run/screen/
+    chmod -R 777 /var/run/screen
     
 # Setup demo environment variables
 ENV HOME=/root \
@@ -138,6 +148,7 @@ ENV HOME=/root \
     RUN_XTERM=yes \
     RUN_FLUXBOX=yes
 COPY . /app
+COPY pulse-client.conf /etc/pulse/client.conf
 COPY createusers.txt /root/
 COPY __init__.py /home/vcbot/config/__init__.py
 RUN chmod +x /app/conf.d/websockify.sh
