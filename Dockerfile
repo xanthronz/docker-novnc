@@ -17,6 +17,9 @@ RUN set -ex; \
       x11vnc \
       xterm \
       xvfb && \
+    cd /root && \
+    sed -i 's/^#\s*\(deb.*partner\)$/\1/g' /etc/apt/sources.list && \
+    sed -i 's/^#\s*\(deb.*restricted\)$/\1/g' /etc/apt/sources.list && \ 
     apt-get update -y && \ 
     apt-get install -yqq locales  && \ 
     apt-get install -yqq \
@@ -67,7 +70,7 @@ RUN set -ex; \
         libopus-dev \
         libmp3lame-dev && \ 
     apt-get update && apt build-dep pulseaudio -y && \
-    cd /tmp && apt source pulseaudio && \
+    cd /tmp && \
     pulsever=$(pulseaudio --version | awk '{print $2}') && cd /tmp/pulseaudio-$pulsever && ./configure  && \
     git clone https://github.com/neutrinolabs/pulseaudio-module-xrdp.git && cd pulseaudio-module-xrdp && ./bootstrap && ./configure PULSE_DIR="/tmp/pulseaudio-$pulsever" && make && \
     cd /tmp/pulseaudio-$pulsever/pulseaudio-module-xrdp/src/.libs && install -t "/var/lib/xrdp-pulseaudio-installer" -D -m 644 *.so && \
