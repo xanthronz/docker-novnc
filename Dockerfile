@@ -27,7 +27,6 @@ RUN set -ex; \
         xfce4 \
         xfce4-goodies \
         pulseaudio \
-        tightvncserver \
         python \
         python3-pip && \ 
     apt-get install --no-install-recommends -yqq \
