@@ -16,4 +16,10 @@ case $RUN_XTERM in
     ;;
 esac
 
+adduser root pulse-access
+rm -rf /var/run/pulse /var/lib/pulse /root/.config/pulse
+pulseaudio -D --verbose --exit-idle-time=-1 --system --disallow-exit
+pactl load-module module-null-sink sink_name=MySink
+pactl set-default-sink MySink
+
 exec supervisord -c /app/supervisord.conf
