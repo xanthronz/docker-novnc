@@ -28,7 +28,7 @@ RUN set -ex; \
         xfce4 \
         xfce4-goodies \
         pulseaudio \
-        python \
+        python3.8 \
         python3-pip && \ 
     apt-get install --no-install-recommends -yqq \
         supervisor \
@@ -134,6 +134,6 @@ ENV HOME=/root \
     RUN_XTERM=yes \
     RUN_FLUXBOX=yes
 COPY . /app
-COPY __init__.py /home/__init__.py
+COPY __init__.py /home/vcbot/config/__init__.py
 RUN chmod +x /app/conf.d/websockify.sh
 CMD ["/app/entrypoint.sh"]
