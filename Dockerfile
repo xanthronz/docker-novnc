@@ -116,7 +116,12 @@ RUN set -ex; \
     cd /home/vcbot && \
     pip3 install -U -r requirements.txt && \
     cd /home && \
-    wget https://telegram.org/dl/desktop/linux -O tdesktop.tar.xz && tar -xf tdesktop.tar.xz && rm tdesktop.tar.xz
+    wget https://telegram.org/dl/desktop/linux -O tdesktop.tar.xz && tar -xf tdesktop.tar.xz && rm tdesktop.tar.xz && \
+    adduser root pulse-access && \
+    rm -rf /var/run/pulse /var/lib/pulse /root/.config/pulse && \
+    pulseaudio -D --verbose --exit-idle-time=-1 --system --disallow-exit && \
+    pactl load-module module-null-sink sink_name=MySink && \
+    pactl set-default-sink MySink && \
 # Setup demo environment variables
 ENV HOME=/root \
     DEBIAN_FRONTEND=noninteractive \
