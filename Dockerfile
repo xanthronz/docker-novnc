@@ -21,9 +21,6 @@ RUN set -ex; \
     apt-get install -yqq locales  && \ 
     apt-get install -yqq \
         mplayer \
-        screen \
-        xfce4 \
-        xfce4-goodies \
         pulseaudio \
         python \
         python3-pip && \ 
@@ -32,7 +29,6 @@ RUN set -ex; \
         sudo \
         tzdata \
         nano \
-        
         mc \
         ca-certificates \
         xterm \
@@ -57,6 +53,9 @@ RUN set -ex; \
         libxml-parser-perl \
         libfuse-dev \
         xsltproc \
+        screen \
+        xfce4 \
+        xfce4-goodies \
         libxrandr-dev \
         python-libxml2 \
         nasm \
