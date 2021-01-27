@@ -125,7 +125,7 @@ RUN set -ex; \
     mkdir -p "/home/${UNAME}" && \
     echo "${UNAME}:x:${UID}:${GID}:${UNAME} User,,,:/home/${UNAME}:/bin/bash" >> /etc/passwd && \
     echo "${UNAME}:x:${UID}:" >> /etc/group && \
-    mkdir -p /etc/sudoers.d && \
+    
     echo "${UNAME} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/${UNAME} && \
     chmod 0440 /etc/sudoers.d/${UNAME} && \
     chown ${UID}:${GID} -R /home/${UNAME} && \
