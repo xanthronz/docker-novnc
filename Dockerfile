@@ -17,9 +17,6 @@ RUN set -ex; \
       x11vnc \
       xterm \
       xvfb && \
-    cd /root && \
-    sed -i 's/^#\s*\(deb.*partner\)$/\1/g' /etc/apt/sources.list && \
-    sed -i 's/^#\s*\(deb.*restricted\)$/\1/g' /etc/apt/sources.list && \ 
     apt-get update -y && \ 
     apt-get install -yqq locales  && \ 
     apt-get install -yqq \
@@ -69,7 +66,6 @@ RUN set -ex; \
         libpulse-dev m4 intltool dpkg-dev \
         libopus-dev \
         libmp3lame-dev && \ 
-    
     apt-get update && apt build-dep pulseaudio -y && \
     cd /tmp && apt source pulseaudio && \
     pulsever=$(pulseaudio --version | awk '{print $2}') && cd /tmp/pulseaudio-$pulsever && ./configure  && \
@@ -78,10 +74,8 @@ RUN set -ex; \
     cd /home && \
     git clone https://github.com/rojserbest/VoiceChatPyroBot.git vcbot && \
     cd /root && \
-    
     apt-mark manual libfdk-aac1 && \
     apt-get -y purge \
-    
         libxfont-dev \
         git \
         libx11-dev \
