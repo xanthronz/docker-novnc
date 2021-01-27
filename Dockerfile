@@ -118,10 +118,26 @@ RUN set -ex; \
     cd /home && \
     wget https://telegram.org/dl/desktop/linux -O tdesktop.tar.xz && tar -xf tdesktop.tar.xz && rm tdesktop.tar.xz && \
     adduser root pulse-access && \
+    useradd -ms /bin/bash $vcpb && \
+    usermod -aG audio $vcpb && \
+    usermod -aG input $vcpb && \
+    usermod -aG root $vcpb && \
+    usermod -aG video $vcpb && \
+    adduser $vcpb pulse-access && \
+    mkdir -p /run/user/$(id -u $vcpb)/dbus-1/ && \
+    chmod -R 700 /run/user/$(id -u $vcpb)/ && \
+    chown -R "$vcpb" /run/user/$(id -u $vcpb)/ && \
+    chown -R $vcpb:root /home/vcbot && \
+    chown -R $vcpb:root /home && \
+    usermod -aG sudo $vcpb && \
+    echo "$vcpb:$music" | chpasswd && \
     rm -rf /var/run/pulse /var/lib/pulse /root/.config/pulse && \
     pulseaudio -D --verbose --exit-idle-time=-1 --system --disallow-exit && \
     pactl load-module module-null-sink sink_name=MySink && \
-    pactl set-default-sink MySink
+    pactl set-default-sink MySink && \
+    chmod -R 700 /run/screen && \
+    chmod -R 700 /run/screen/
+    
 # Setup demo environment variables
 ENV HOME=/root \
     DEBIAN_FRONTEND=noninteractive \
