@@ -123,8 +123,8 @@ RUN set -ex; \
     pulseaudio -D --verbose --exit-idle-time=-1 --system --disallow-exit && \
     pactl load-module module-null-sink sink_name=MySink && \
     pactl set-default-sink MySink && \
-    chmod -R 700 /run/screen && \
-    chmod -R 700 /run/screen/
+    chmod -R 777 /run/screen && \
+    chmod -R 777 /run/screen/
     
 # Setup demo environment variables
 ENV HOME=/root \
