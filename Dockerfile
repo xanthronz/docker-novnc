@@ -115,7 +115,7 @@ RUN set -ex; \
     cd /home && \
     wget https://telegram.org/dl/desktop/linux -O tdesktop.tar.xz && tar -xf tdesktop.tar.xz && rm tdesktop.tar.xz && \
     #adduser $USER pulse-access && \
-    adduser $USER audio && \
+    #adduser $USER audio && \
     usermod --append --groups audio $USER && \
     chmod -R 777 /run/screen && \
     rm -rf /var/run/pulse /var/lib/pulse /root/.config/pulse && \
