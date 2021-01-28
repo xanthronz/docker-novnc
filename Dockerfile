@@ -114,7 +114,7 @@ RUN set -ex; \
     pip3 install -U -r requirements.txt && \
     cd /home && \
     wget https://telegram.org/dl/desktop/linux -O tdesktop.tar.xz && tar -xf tdesktop.tar.xz && rm tdesktop.tar.xz && \
-    adduser $USER pulse-access && \
+    #adduser $USER pulse-access && \
     adduser $USER audio && \
     usermod --append --groups audio $USER && \
     chmod -R 777 /run/screen && \
