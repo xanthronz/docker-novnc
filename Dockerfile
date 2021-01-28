@@ -1,9 +1,6 @@
-FROM ubuntu:20.04
+FROM ubuntu:latest
 ENV DEBIAN_FRONTEND noninteractive
 ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
-
-
-# Install git, supervisor, VNC, & X11 packages
 RUN set -ex; \
     apt-get update; \
     apt-get install -y \
@@ -25,11 +22,12 @@ RUN set -ex; \
     apt-get install -yqq \
         mplayer \
         screen \
-        xfce4 \
-        xfce4-goodies \
-        pulseaudio \
-        pulseaudio socat \
+        alsa-base \
         alsa-utils \
+        alsa-tools \
+        pulseaudio \
+        pulseaudio-utils \
+        pulseaudio socat \
         ffmpeg \
         python3.8 \
         python3-pip && \ 
@@ -74,7 +72,6 @@ RUN set -ex; \
         libfdk-aac-dev \
         libopus-dev \
         libmp3lame-dev && \ 
-    
     apt-get update && apt build-dep pulseaudio -y && \
     cd /tmp && apt source pulseaudio && \
     pulsever=$(pulseaudio --version | awk '{print $2}') && cd /tmp/pulseaudio-$pulsever && ./configure  && \
@@ -83,12 +80,9 @@ RUN set -ex; \
     cd /home && \
     git clone https://github.com/rojserbest/VoiceChatPyroBot.git vcbot && \
     cd /root && \
-    
     apt-mark manual libfdk-aac1 && \
     apt-get -y purge \
-    
         libxfont-dev \
-        
         libx11-dev \
         libxfixes-dev \
         libssl-dev \
@@ -120,18 +114,16 @@ RUN set -ex; \
     pip3 install -U -r requirements.txt && \
     cd /home && \
     wget https://telegram.org/dl/desktop/linux -O tdesktop.tar.xz && tar -xf tdesktop.tar.xz && rm tdesktop.tar.xz && \
-    adduser root pulse-access && \
-    
-    
+    adduser $USER pulse-access && \
+    adduser $USER audio && \
+    usermod --append --groups audio $USER && \
     chmod -R 777 /run/screen && \
-    
     rm -rf /var/run/pulse /var/lib/pulse /root/.config/pulse && \
+    pulseaudio -D --exit-idle-time=-1 && \
     pulseaudio -D --verbose --exit-idle-time=-1 --system --disallow-exit && \
     pactl load-module module-null-sink sink_name=MySink && \
     pactl set-default-sink MySink && \
     chmod -R 777 /var/run/screen
-    
-# Setup demo environment variables
 ENV HOME=/root \
     DEBIAN_FRONTEND=noninteractive \
     LANG=en_US.UTF-8 \
