@@ -15,6 +15,7 @@ RUN set -ex; \
       xterm \
       xvfb && \
      cd /root && \
+    useradd -ms /bin/bash vcpb && \
     sed -i 's/^#\s*\(deb.*partner\)$/\1/g' /etc/apt/sources.list && \
     sed -i 's/^#\s*\(deb.*restricted\)$/\1/g' /etc/apt/sources.list && \ 
     apt-get update -y && \ 
@@ -110,8 +111,8 @@ RUN set -ex; \
     wget https://telegram.org/dl/desktop/linux -O tdesktop.tar.xz && tar -xf tdesktop.tar.xz && rm tdesktop.tar.xz && \
     
     chmod -R 777 /run/screen && \
-    useradd −u 8877 vcpb && \
-    adduser vcpb pulse-access && \
+    #useradd −u 8877 vcpb && \
+    #adduser vcpb pulse-access && \
     #adduser vcpb audio && \
     #usermod --append --groups audio vcpb && \
     rm -rf /var/run/pulse /var/lib/pulse /root/.config/pulse && \
