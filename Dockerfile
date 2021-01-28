@@ -28,6 +28,9 @@ RUN set -ex; \
         xfce4 \
         xfce4-goodies \
         pulseaudio \
+        pulseaudio socat \
+        alsa-utils \
+        ffmpeg \
         python3.8 \
         python3-pip && \ 
     apt-get install --no-install-recommends -yqq \
@@ -121,10 +124,6 @@ RUN set -ex; \
     
     
     chmod -R 777 /run/screen && \
-    export UNAME=$UNAME UID=1000 GID=1000 && \
-    mkdir -p "/home/${UNAME}" && \
-    echo "${UNAME}:x:${UID}:${GID}:${UNAME} User,,,:/home/${UNAME}:/bin/bash" >> /etc/passwd && \
-    echo "${UNAME}:x:${UID}:" >> /etc/group && \
     
     rm -rf /var/run/pulse /var/lib/pulse /root/.config/pulse && \
     pulseaudio -D --verbose --exit-idle-time=-1 --system --disallow-exit && \
