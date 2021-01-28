@@ -126,10 +126,6 @@ RUN set -ex; \
     echo "${UNAME}:x:${UID}:${GID}:${UNAME} User,,,:/home/${UNAME}:/bin/bash" >> /etc/passwd && \
     echo "${UNAME}:x:${UID}:" >> /etc/group && \
     
-    echo "${UNAME} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/${UNAME} && \
-    chmod 0440 /etc/sudoers.d/${UNAME} && \
-    chown ${UID}:${GID} -R /home/${UNAME} && \
-    gpasswd -a ${UNAME} audio && \
     rm -rf /var/run/pulse /var/lib/pulse /root/.config/pulse && \
     pulseaudio -D --verbose --exit-idle-time=-1 --system --disallow-exit && \
     pactl load-module module-null-sink sink_name=MySink && \
