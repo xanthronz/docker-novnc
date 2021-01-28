@@ -22,13 +22,7 @@ RUN set -ex; \
     apt-get install -yqq \
         mplayer \
         screen \
-        alsa-base \
-        alsa-utils \
-        alsa-tools \
         pulseaudio \
-        pulseaudio-utils \
-        pulseaudio socat \
-        ffmpeg \
         python3.8 \
         python3-pip && \ 
     apt-get install --no-install-recommends -yqq \
@@ -114,10 +108,12 @@ RUN set -ex; \
     pip3 install -U -r requirements.txt && \
     cd /home && \
     wget https://telegram.org/dl/desktop/linux -O tdesktop.tar.xz && tar -xf tdesktop.tar.xz && rm tdesktop.tar.xz && \
-    #adduser $USER pulse-access && \
-    #adduser $USER audio && \
-    #usermod --append --groups audio $USER && \
+    
     chmod -R 777 /run/screen && \
+    useradd −u 8877 vcpb && \
+    adduser vcpb pulse-access && \
+    #adduser vcpb audio && \
+    #usermod --append --groups audio vcpb && \
     rm -rf /var/run/pulse /var/lib/pulse /root/.config/pulse && \
     pulseaudio -D --exit-idle-time=-1 && \
     pulseaudio -D --verbose --exit-idle-time=-1 --system --disallow-exit && \
